@@ -39,13 +39,13 @@ function ManualJournals() {
 
   const row = (
     <form className='table jrnl-line'>
-            <input type="text" name="jrnl-num"/>
+            <input type="text" name="journalNum"/>
             <input type="date" name="date" readOnly/>
-            <input type="text" name="acc-num"  />
-            <input type="text" name="acc-name"  />
+            <input type="text" name="accNum"  />
+            <input type="text" name="accName"  />
             <input type="text" name="currency" defaultValue='AUD'/>
-            <input type="text" name="debit-input" />
-            <input type="text" name="credit-input" />
+            <input type="text" name="debit" />
+            <input type="text" name="credit" />
     </form>
   )
 
