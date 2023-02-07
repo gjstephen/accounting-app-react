@@ -16,7 +16,6 @@ function SignUp() {
     event.preventDefault()
     const form = event.target
     const data = Object.fromEntries(new FormData(form))
-    console.log(data)
 
     if (!checkPassword(data)) {
       document.querySelector('.error-message').textContent = 'Passwords do not match'

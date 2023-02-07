@@ -1,31 +1,53 @@
 import { useState} from 'react'
+import './mjStyle.scss'
 
-const row = (
-  <tr>
-    <td><input type="text" className="acc-num"  /></td>
-    <td><input type="text" className="acc-name"  /></td>
-    <td><input type="text" className="currency"  value='AUD'/></td>
-    <td><input type="text" className="debit-input" /></td>
-    <td><input type="text" className="credit-input" /></td>
-  </tr>
-)
 
 function ManualJournals() {
   const [ transactionLines, setNumLines ] = useState(4)
-  
+
   const addNewLine = () => {
     // document.querySelector('.jrnl-lines').append(row)
     return row
   }
 
-  const postJournal = () => {
-    const accNum = document.querySelectorAll('.acc-num')
-    for (const i in accNum) {
+  const renderPostJournal = () => {
+    const forms = document.querySelectorAll('.jrnl-line')
+    console.log(forms)
+    for (const i in forms) {
       if (i >= 0) {
-        console.log(accNum[i].value)
+        // console.log(forms[i])
+        // console.log('submit')
+        postJournal(forms[i])
       }
     }
   }
+
+  const postJournal = (form) => {
+    // console.log('meow')
+    // event.preventDefault()
+    // const form = event.target
+    const data = Object.fromEntries(new FormData(form))
+    // console.log(data)
+
+    fetch('/api/journals', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+  }
+
+  const row = (
+    <form className='table jrnl-line'>
+            <input type="text" name="jrnl-num"/>
+            <input type="date" name="date" readOnly/>
+            <input type="text" name="acc-num"  />
+            <input type="text" name="acc-name"  />
+            <input type="text" name="currency" defaultValue='AUD'/>
+            <input type="text" name="debit-input" />
+            <input type="text" name="credit-input" />
+    </form>
+  )
 
   return (
     <div>
@@ -54,6 +76,8 @@ function ManualJournals() {
         <table>
           <thead>
             <tr>
+              <th>Journal Number</th>
+              <th>Date</th>
               <th>Account Number</th>
               <th>Account Name</th>
               <th>Currency</th>
@@ -61,14 +85,12 @@ function ManualJournals() {
               <th>Credit</th>
             </tr>
           </thead>
-
-          <tbody className='jrnl-lines'>
-            {row}
-            {row}
-            {row}
-            {row}
-          </tbody>
         </table>
+
+        <section>
+          {row}
+          {row}
+        </section>
       </div>
 
       <div className="jrnl-cntrls">
@@ -78,21 +100,40 @@ function ManualJournals() {
           <label>Total</label>
           <input 
             className="debit-subtotals" 
-            type="text" readonly 
+            type="text" readOnly 
             value='0.00'
           />
 
           <input 
             className="credit-subtotals" 
-            type="text" readonly 
+            type="text" readOnly 
             value='0.00'
           />
         </div>
 
-        <button onClick={postJournal}>Post Journal</button>
+        <button onClick={renderPostJournal}>Post Journal</button>
       </div>
     </div>
   )
 }
 
 export default ManualJournals
+
+
+// const row = (
+//   <form className='table jrnl-line' onSubmit={postJournal}>
+//     <table>
+//       <tbody>
+//         <tr>
+//           <td><input type="text" name="jrnl-num"/></td>
+//           <td><input type="date" name="date" readOnly/></td>
+//           <td><input type="text" name="acc-num"  /></td>
+//           <td><input type="text" name="acc-name"  /></td>
+//           <td><input type="text" name="currency" defaultValue='AUD'/></td>
+//           <td><input type="text" name="debit-input" /></td>
+//           <td><input type="text" name="credit-input" /></td>
+//         </tr>
+//       </tbody>
+//     </table>
+//   </form>
+// )

@@ -1,0 +1,19 @@
+.jrnl-sctn {
+  width: 80%;
+}
+
+form {
+  // display: grid;
+  // grid-template-columns: repeat(7, 1fr);
+  text-align: left;
+}
+
+.jrnl-num,
+.date,
+.currency {
+  width: 2rem;
+}
+
+th {
+  font-size: 0.8rem;
+}

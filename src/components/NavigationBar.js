@@ -12,13 +12,13 @@ function NavigationBar() {
       // .then(res => renderLogInButton(res))
       .then(res => setLoggedInUser(res))
       .then(() => renderLogInButton())
-      // .then(() => {
-      //   if (!loggedInUser) {
-      //     return (<p><Link to='/'>Log Out</Link></p>)
-      //   } else {
-      //     return (<p><Link to='/users/log_in'>Log In</Link></p>)
-      //   } 
-    // })
+      .then(() => {
+        if (!loggedInUser) {
+          return (<p><Link to='/'>Log Out</Link></p>)
+        } else {
+          return (<p><Link to='/users/log_in'>Log In</Link></p>)
+        } 
+    })
   }
 
   const renderLogInButton = (res) => {
