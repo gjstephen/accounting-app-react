@@ -1,15 +1,32 @@
+import { useState} from 'react'
+
 const row = (
   <tr>
-    <td><input type="text" /></td>
-    <td><input type="text" /></td>
-    <td><input type="text" value='AUD'/></td>
+    <td><input type="text" className="acc-num"  /></td>
+    <td><input type="text" className="acc-name"  /></td>
+    <td><input type="text" className="currency"  value='AUD'/></td>
     <td><input type="text" className="debit-input" /></td>
     <td><input type="text" className="credit-input" /></td>
   </tr>
 )
 
 function ManualJournals() {
+  const [ transactionLines, setNumLines ] = useState(4)
   
+  const addNewLine = () => {
+    // document.querySelector('.jrnl-lines').append(row)
+    return row
+  }
+
+  const postJournal = () => {
+    const accNum = document.querySelectorAll('.acc-num')
+    for (const i in accNum) {
+      if (i >= 0) {
+        console.log(accNum[i].value)
+      }
+    }
+  }
+
   return (
     <div>
       <h1>Lets create a Manual Journal</h1>
@@ -20,6 +37,7 @@ function ManualJournals() {
               <tr>
                 <th>Narration</th>
                 <th>Date</th>
+                <th>Journal Number</th>
               </tr>
             </thead>
 
@@ -27,6 +45,7 @@ function ManualJournals() {
               <tr>
                 <td><textarea name="" id="" cols="40" rows="4"></textarea></td>
                 <td><input type="date" /></td>
+                <td><input type="text" /></td>
               </tr>
             </tbody>
           </table>
@@ -43,7 +62,7 @@ function ManualJournals() {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className='jrnl-lines'>
             {row}
             {row}
             {row}
@@ -53,7 +72,7 @@ function ManualJournals() {
       </div>
 
       <div className="jrnl-cntrls">
-        <button>Add new line</button>
+        <button onClick={addNewLine}>Add new line</button>
 
         <div className="jrnl-subtotals">
           <label>Total</label>
@@ -70,7 +89,7 @@ function ManualJournals() {
           />
         </div>
 
-        <button>Post Journal</button>
+        <button onClick={postJournal}>Post Journal</button>
       </div>
     </div>
   )
