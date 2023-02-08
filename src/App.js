@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, redirect, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 import Home from './components/Home'
@@ -27,28 +27,36 @@ function App() {
       .then(res => res.json())
       .then(res => {
         if (res.error) {
-          // renderLogin()
           document.querySelector('.error-message').textContent = 'Please enter a password or email.'
         } else {
-          // console.log('meow')
           setLoggedInUser(res)
-          console.log(res)
-          // console.log(loggedInUser)
-          // Home()
+          // return redirect('/')
+          // navigate()
         }
       })
+  }
+
+  const renderLogOut = () => {
+    fetch('/api/sessions', {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(res => setLoggedInUser(res))
   }
 
   return (
     <div className="App">
       <header>
-        <NavigationBar />
+        <NavigationBar 
+          loggedInUser={loggedInUser}
+          renderLogOut={renderLogOut}
+        />
       </header>
 
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/users/sign_up' element={<SignUp />} />
-        <Route path='/users/log_in' element={<LogIn renderLogIn={renderLogIn}/>} />
+        <Route path='/users/log_in' element={<LogIn renderLogIn={renderLogIn} loggedInUser={loggedInUser}/>} />
         <Route path='/trialBalance' element={<TrialBalance />} />
         <Route path='/incomeStatement' element={<IncomeStatement />} />
         <Route path='/create/manualJournal' element={<ManualJournals loggedInUser={loggedInUser}/>} />

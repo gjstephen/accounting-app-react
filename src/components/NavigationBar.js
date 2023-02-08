@@ -2,32 +2,14 @@ import './navigationBar.scss'
 import { Link } from 'react-router-dom' 
 import { useState} from 'react'
 
-function NavigationBar(renderLogIn) {
-  let [ loggedInUser, setLoggedInUser ] = useState(null)
+function NavigationBar({ loggedInUser, renderLogOut }) {
 
   const isLoggedIn = () => {
-    // console.log('meow')
-    fetch('/api/sessions')
-      .then(res => res.json())
-      // .then(res => renderLogInButton(res))
-      .then(res => setLoggedInUser(res))
-      .then(() => renderLogInButton())
-      .then(() => {
-        if (!loggedInUser) {
-          return (<p><Link to='/'>Log Out</Link></p>)
-        } else {
-          return (<p><Link to='/users/log_in'>Log In</Link></p>)
-        } 
-    })
-  }
-
-  const renderLogInButton = (res) => {
-    // console.log(loggedInUser)
-    if (res) {
-      document.querySelector('.user-btn').innerHTML = `<p><Link to='/'>Log Out</Link></p>`
+    if (loggedInUser) {
+      return (<p onClick={renderLogOut}><Link to='/'>Log Out</Link></p>)
     } else {
-      document.querySelector('.user-btn').innerHTML = `<p><Link to='/users/log_in'>Log In</Link></p>`
-    } 
+      return (<p><Link to='/users/log_in'>Log In</Link></p>)
+    }
   }
 
   return (
@@ -61,10 +43,8 @@ function NavigationBar(renderLogIn) {
       <div className="user-info">
         <p><Link to='/users/sign_up'>Sign Up</Link></p>
         <div className="user-btn">
-          <p><Link to='/'>Log Out</Link></p>
-          <p><Link to='/users/log_in'>Log In</Link></p>
+          {isLoggedIn()}
         </div>
-        {/* {isLoggedIn()} */}
       </div>
     </div>
   )

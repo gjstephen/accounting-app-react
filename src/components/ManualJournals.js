@@ -12,7 +12,7 @@ function ManualJournals({ loggedInUser }) {
 
   const renderPostJournal = () => {
     const forms = document.querySelectorAll('.jrnl-line')
-    console.log(forms)
+    // console.log(forms)
     for (const i in forms) {
       if (i >= 0) {
         // console.log(forms[i])
@@ -23,29 +23,33 @@ function ManualJournals({ loggedInUser }) {
   }
 
   const postJournal = (form) => {
-    // console.log('meow')
-    // event.preventDefault()
-    // const form = event.target
-    const data = Object.fromEntries(new FormData(form))
-    // console.log(data)
+    let data = Object.fromEntries(new FormData(form))
+    const date = document.querySelector('.date')
+    const narration = document.querySelector('.narration')
+    const jrnlNum = document.querySelector('.journal-number')
+    const userId = document.querySelector('.userId')
+    data = {...data, date, narration, jrnlNum, userId}
+    console.log(data)
 
-    fetch('/api/journals', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
+    // fetch('/api/journals', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(data)
+    // })
+    //   .then(res => res.json())
   }
 
   const row = (
     <form className='table jrnl-line'>
-            <input type="text" name="journalNum"/>
-            <input type="date" name="date" readOnly/>
-            <input type="text" name="accNum"  />
-            <input type="text" name="accName"  />
-            <input type="text" name="currency" defaultValue='AUD'/>
-            <input type="text" name="debit" />
-            <input type="text" name="credit" />
+      <section className='jrnl-row'>
+        {/* <input type="text" name="journalNum"/>
+        <input type="date" name="date" readOnly/> */}
+        <input type="text" name="accNum"  />
+        <input type="text" name="accName"  />
+        <input type="text" name="currency" defaultValue='AUD'/>
+        <input type="text" name="debit" />
+        <input type="text" name="credit" />
+      </section>
     </form>
   )
 
@@ -66,28 +70,24 @@ function ManualJournals({ loggedInUser }) {
 
             <tbody>
               <tr>
-                <td><textarea name="" id="" cols="40" rows="4"></textarea></td>
-                <td><input type="date" /></td>
-                <td><input type="text" /></td>
-                <td><p>{loggedInUser.id}</p></td>
+                <td><textarea name="" id="" cols="40" rows="4" className='narration'></textarea></td>
+                <td><input type="date" className='date'/></td>
+                <td><input type="text" className='journal-number'/></td>
+                <td><p className='user-id'>{loggedInUser.id}</p></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Journal Number</th>
-              <th>Date</th>
-              <th>Account Number</th>
-              <th>Account Name</th>
-              <th>Currency</th>
-              <th>Debit</th>
-              <th>Credit</th>
-            </tr>
-          </thead>
-        </table>
+        <section className='jrnl-row'>
+          {/* <h4 className='table-header'>Journal Number</h4>
+          <h4 className='table-header'>Date</h4> */}
+          <h4 className='table-header'>Account Number</h4>
+          <h4 className='table-header'>Account Name</h4>
+          <h4 className='table-header'>Currency</h4>
+          <h4 className='table-header'>Debit</h4>
+          <h4 className='table-header'>Credit</h4>
+        </section>
 
         <section>
           {row}

@@ -8,6 +8,18 @@ form {
   text-align: left;
 }
 
+.jrnl-row {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0.5rem;
+
+  input {
+    width: 100%;
+  }
+}
+
+
 .jrnl-num,
 .date,
 .currency {
