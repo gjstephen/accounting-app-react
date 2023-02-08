@@ -2,7 +2,7 @@ import { useState} from 'react'
 import './mjStyle.scss'
 
 
-function ManualJournals() {
+function ManualJournals({ loggedInUser }) {
   const [ transactionLines, setNumLines ] = useState(4)
 
   const addNewLine = () => {
@@ -60,6 +60,7 @@ function ManualJournals() {
                 <th>Narration</th>
                 <th>Date</th>
                 <th>Journal Number</th>
+                <th>User Id</th>
               </tr>
             </thead>
 
@@ -68,6 +69,7 @@ function ManualJournals() {
                 <td><textarea name="" id="" cols="40" rows="4"></textarea></td>
                 <td><input type="date" /></td>
                 <td><input type="text" /></td>
+                <td><p>{loggedInUser.id}</p></td>
               </tr>
             </tbody>
           </table>

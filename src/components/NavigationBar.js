@@ -2,7 +2,7 @@ import './navigationBar.scss'
 import { Link } from 'react-router-dom' 
 import { useState} from 'react'
 
-function NavigationBar() {
+function NavigationBar(renderLogIn) {
   let [ loggedInUser, setLoggedInUser ] = useState(null)
 
   const isLoggedIn = () => {
@@ -60,8 +60,11 @@ function NavigationBar() {
       
       <div className="user-info">
         <p><Link to='/users/sign_up'>Sign Up</Link></p>
-        <div className="user-btn"></div>
-        {isLoggedIn()}
+        <div className="user-btn">
+          <p><Link to='/'>Log Out</Link></p>
+          <p><Link to='/users/log_in'>Log In</Link></p>
+        </div>
+        {/* {isLoggedIn()} */}
       </div>
     </div>
   )
