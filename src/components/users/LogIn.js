@@ -7,7 +7,7 @@ function LogIn({ renderLogIn, loggedInUser }) {
 
   const renderRedirect = () => {
     if (loggedInUser) {
-      return (<Navigate to='/'/>)
+      // return (<Navigate to='/'/>)
     }
   }
 

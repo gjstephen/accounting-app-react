@@ -1,10 +1,11 @@
 import { useState} from 'react'
+import { useNavigate, Navigate} from 'react-router-dom'
 import './mjStyle.scss'
 
 
 function ManualJournals({ loggedInUser }) {
-  const [ transactionLines, setNumLines ] = useState(4)
-
+  const navigate = useNavigate()
+  
   const addNewLine = () => {
     // document.querySelector('.jrnl-lines').append(row)
     return row
@@ -22,21 +23,37 @@ function ManualJournals({ loggedInUser }) {
     }
   }
 
+  // const checkNonZero = () => {
+
+  // }
+
   const postJournal = (form) => {
     let data = Object.fromEntries(new FormData(form))
-    const date = document.querySelector('.date')
-    const narration = document.querySelector('.narration')
-    const jrnlNum = document.querySelector('.journal-number')
-    const userId = document.querySelector('.userId')
-    data = {...data, date, narration, jrnlNum, userId}
+    const date = document.querySelector('.date').value
+    const narration = document.querySelector('.narration').value
+    const jrnlNum = document.querySelector('.journal-number').value
+    const entityId = document.querySelector('.entityId').value
+    const userId = loggedInUser.id
+    data = {...data, date, narration, jrnlNum, userId, entityId}
     console.log(data)
-
-    // fetch('/api/journals', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(data)
-    // })
-    //   .then(res => res.json())
+    // navigate('/')
+    // console.log('yes')
+    
+    fetch('/api/journals', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(navigate('/'))
+  }
+  
+  const isLoggedIn = () => {
+    if (loggedInUser) {
+      return loggedInUser.id
+    } else {
+      return (<Navigate to='/users/log_in'/>)
+    }
   }
 
   const row = (
@@ -44,11 +61,12 @@ function ManualJournals({ loggedInUser }) {
       <section className='jrnl-row'>
         {/* <input type="text" name="journalNum"/>
         <input type="date" name="date" readOnly/> */}
+        <input type="text" name="description"  />
         <input type="text" name="accNum"  />
         <input type="text" name="accName"  />
-        <input type="text" name="currency" defaultValue='AUD'/>
-        <input type="text" name="debit" />
-        <input type="text" name="credit" />
+        <input type="text" name="currency" defaultValue='AUD' className=' numInput'/>
+        <input type="text" name="debit" defaultValue='0' className=' numInput'/>
+        <input type="text" name="credit" defaultValue='0' className=' numInput'/>
       </section>
     </form>
   )
@@ -61,27 +79,30 @@ function ManualJournals({ loggedInUser }) {
           <table>
             <thead>
               <tr>
-                <th>Narration</th>
-                <th>Date</th>
-                <th>Journal Number</th>
                 <th>User Id</th>
+                <th>Entity Id</th>
+                <th>Journal Number</th>
+                <th>Date</th>
+                <th>Narration</th>
               </tr>
             </thead>
 
             <tbody>
               <tr>
+                <td><p className='user-id'>{isLoggedIn()}</p></td>
+                <td><input type="text" className='entityId numInput'/></td>
+                <td><input type="text" className='journal-number numInput'/></td>
+                <td><input type="date" className='date' required/></td>
                 <td><textarea name="" id="" cols="40" rows="4" className='narration'></textarea></td>
-                <td><input type="date" className='date'/></td>
-                <td><input type="text" className='journal-number'/></td>
-                <td><p className='user-id'>{loggedInUser.id}</p></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <section className='jrnl-row'>
+        <section className='table-header jrnl-row'>
           {/* <h4 className='table-header'>Journal Number</h4>
           <h4 className='table-header'>Date</h4> */}
+          <h4 className='table-header'>Line Description</h4>
           <h4 className='table-header'>Account Number</h4>
           <h4 className='table-header'>Account Name</h4>
           <h4 className='table-header'>Currency</h4>
@@ -89,25 +110,29 @@ function ManualJournals({ loggedInUser }) {
           <h4 className='table-header'>Credit</h4>
         </section>
 
-        <section>
+        <section className='table-rows'>
           {row}
           {row}
+          <div className='new-line-btn'>
+            {/* <div> */}
+              <button onClick={addNewLine}>Add new line</button>
+            {/* </div> */}
+          </div>
         </section>
       </div>
 
       <div className="jrnl-cntrls">
-        <button onClick={addNewLine}>Add new line</button>
 
         <div className="jrnl-subtotals">
           <label>Total</label>
           <input 
-            className="debit-subtotals" 
+            className="debit-subtotals numInput" 
             type="text" readOnly 
             value='0.00'
           />
 
           <input 
-            className="credit-subtotals" 
+            className="credit-subtotals numInput" 
             type="text" readOnly 
             value='0.00'
           />

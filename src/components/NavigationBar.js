@@ -23,6 +23,7 @@ function NavigationBar({ loggedInUser, renderLogOut }) {
           <p>Reports</p>
           <div className="nav-dropdown div-reports">
             <ul>
+              <li><Link to='/generalLedger'>General Ledger</Link></li>
               <li><Link to='/trialBalance'>Trial Balance</Link></li>
               <li><Link to='/incomeStatement'>Income Statement</Link></li>
             </ul>
