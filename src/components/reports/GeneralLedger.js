@@ -5,10 +5,14 @@ function GeneralLedger({ loggedInUser }) {
   const [journalLog, setJournalLog] = useState(null)
   
   const getGeneralLedger = () => {
-    fetch(`/api/journals/${loggedInUser.id}`)
-      .then(res => res.json())
-      // .then(journals => console.log(journals))
-      .then(journals => setJournalLog(journals))
+    if (loggedInUser) {
+      fetch(`/api/journals/${loggedInUser.id}`, {
+        method: 'GET'
+      })
+        .then(res => res.json())
+        // .then(journals => console.log(journals))
+        .then(journals => setJournalLog(journals))
+    }
   }
 
   useEffect(getGeneralLedger, [])
@@ -63,7 +67,7 @@ function GeneralLedger({ loggedInUser }) {
 
   return (
     <div>
-      <h1>General Ledger</h1>
+      <h1>Detailed General Ledger</h1>
 
       <table>
         <thead>
