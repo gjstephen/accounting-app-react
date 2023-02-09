@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import './reports.scss'
+import { formatNumbers } from './reportFormatting'
 
-function GeneralLedger({ loggedInUser }) {
+function GeneralLedger({ loggedInUser}) {
   const [journalLog, setJournalLog] = useState(null)
   
   const getGeneralLedger = () => {
@@ -17,24 +18,24 @@ function GeneralLedger({ loggedInUser }) {
 
   useEffect(getGeneralLedger, [])
 
-  const formatNumbers = (number, sign) => {
-    const formattedNum = []
-    number.toFixed(2).split('').reverse()
-      .forEach((digit, index) => {
-        if (index % 3 === 0 && index !== 3 && index !== 0) {
-          formattedNum.push(',')
-        }
-        formattedNum.push(digit)
-      })
+  // const formatNumbers = (number, sign) => {
+  //   const formattedNum = []
+  //   number.toFixed(2).split('').reverse()
+  //     .forEach((digit, index) => {
+  //       if (index % 3 === 0 && index !== 3 && index !== 0) {
+  //         formattedNum.push(',')
+  //       }
+  //       formattedNum.push(digit)
+  //     })
       
-    if (number === 0) {
-      return '-'
-    } else if (sign === 'debit') {
-      return formattedNum.reverse().join('')
-    } else if (sign === 'credit') {
-      return `(${formattedNum.reverse().join('')})`
-    }
-  }
+  //   if (number === 0) {
+  //     return '-'
+  //   } else if (sign === 'debit') {
+  //     return formattedNum.reverse().join('')
+  //   } else if (sign === 'credit') {
+  //     return `(${formattedNum.reverse().join('')})`
+  //   }
+  // }
 
   const renderJournalLines = () => {
     return journalLog
