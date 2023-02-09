@@ -48,15 +48,19 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0rem;
     text-align: left;
     background-color: rgba(244, 180, 180, 0.868);
   }
 
   li {
-    // width: 1rem;
+    height: 3.5rem;
     margin: 0;
     padding-left: 0;
+  }
+
+  li:hover {
+    background-color: rgba(241, 207, 207, 0.868);
   }
 }
 hr {
@@ -81,3 +85,4 @@ hr {
   visibility: visible;
   text-align: left;
 }
+

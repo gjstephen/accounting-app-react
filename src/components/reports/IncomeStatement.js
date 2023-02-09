@@ -2,7 +2,7 @@ function IncomeStatement() {
   
   return (
     <div>
-      Income statement, coming soon to an account near you.
+      Income statement, coming soon to an accountant near you.
     </div>
   )
 }

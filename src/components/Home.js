@@ -17,14 +17,14 @@ function Home() {
         <div>
           <h3>Reports</h3>
           <ul>
-            <li><Link to='/reports/generalLedger'>Detailed General Ledger</Link></li>
-            <li><Link to='/reports/trialBalance'>Trial Balance</Link></li>
+            <li><Link to='/reports/generalLedger' className='home-link'>Detailed General Ledger</Link></li>
+            <li><Link to='/reports/trialBalance' className='home-link'>Trial Balance</Link></li>
           </ul>
         </div>
         <div>
           <h3>Record Transactions</h3>
           <ul>
-            <li><Link to='/create/manualJournal'>Manual Journal</Link></li>
+            <li><Link to='/create/manualJournal' className='home-link'>Manual Journal</Link></li>
           </ul>
         </div>
       </section>

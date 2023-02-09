@@ -11,34 +11,14 @@ function GeneralLedger({ loggedInUser}) {
         method: 'GET'
       })
         .then(res => res.json())
-        // .then(journals => console.log(journals))
-        .then(journals => setJournalLog(journals))
+        .then(journals => sortJournalLines(journals))
     }
   }
 
   useEffect(getGeneralLedger, [])
 
-  // const formatNumbers = (number, sign) => {
-  //   const formattedNum = []
-  //   number.toFixed(2).split('').reverse()
-  //     .forEach((digit, index) => {
-  //       if (index % 3 === 0 && index !== 3 && index !== 0) {
-  //         formattedNum.push(',')
-  //       }
-  //       formattedNum.push(digit)
-  //     })
-      
-  //   if (number === 0) {
-  //     return '-'
-  //   } else if (sign === 'debit') {
-  //     return formattedNum.reverse().join('')
-  //   } else if (sign === 'credit') {
-  //     return `(${formattedNum.reverse().join('')})`
-  //   }
-  // }
-
-  const renderJournalLines = () => {
-    return journalLog
+  const sortJournalLines = (journals) => {
+    const sortedJournals = journals
       ?.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
       .sort((a, b) => {
         if (a.date === b.date) {
@@ -50,25 +30,55 @@ function GeneralLedger({ loggedInUser}) {
           return a.account_number - b.account_number
         }
       })
-      .map((journal, index) => {
-        return (
-          <tr className='jrnl' key={index}>
-            <td>{journal.journal_number}</td>
-            <td>{journal.date.slice(0,10).split('-').reverse().join('/')}</td>
-            <td>{journal.jrnl_narration}</td>
-            <td>{journal.account_number}</td>
-            <td>{journal.account_name}</td>
-            <td>{journal.currency}</td>
-            <td>{formatNumbers(journal.debit, 'debit')}</td>
-            <td>{formatNumbers(journal.credit, 'credit')}</td>
-          </tr>
-        )
-    })
+
+
+    setJournalLog(sortedJournals)
   }
+
+  const renderJournalLines = () => {
+    return journalLog?.map((journal, index) => {
+      return (
+        <tr className='jrnl' key={index}>
+          <td>{journal.journal_number}</td>
+          <td>{journal.date.slice(0,10).split('-').reverse().join('/')}</td>
+          <td>{journal.jrnl_narration}</td>
+          <td>{journal.account_number}</td>
+          <td>{journal.account_name}</td>
+          <td>{journal.currency}</td>
+          <td>{formatNumbers(journal.debit, 'debit')}</td>
+          <td>{formatNumbers(journal.credit, 'credit')}</td>
+        </tr>
+      )
+  })
+  }
+
+  // const renderJournalNumbersFilter = () => {
+  //   // console.log(journalLog)
+  //   const uniqueJournals = new Set( 
+  //     journalLog?.map(journal => journal.journal_number)
+  //   )
+  //   const uniqueNum = []
+  //   uniqueJournals.forEach(num => {
+  //     // console.log(num)
+  //     uniqueNum.push(num)
+  //   })
+  //   return uniqueNum
+  //     .sort((a, b) => a - b)  
+  //     .map((num, index) => {
+  //       return (<option key={index} value={num}>{num}</option>)
+  //     }).join('')
+  // }
 
   return (
     <div>
       <h1>Detailed General Ledger</h1>
+
+      {/* <div className="filter-options">
+        <label htmlFor="">Journal Number</label>
+        <select name="journalFilter" id="">
+          {renderJournalNumbersFilter()}
+        </select>
+      </div> */}
 
       <table>
         <thead>
