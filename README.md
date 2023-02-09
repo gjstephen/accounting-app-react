@@ -27,7 +27,8 @@ I have created a web app where users can create record accounting transactions t
 
 # :sob: Lessons learnt
 One of the biggest challenges was being able to record a single transaction with multiple line items as individual yet connected entries in the database, with the creation of it being user friendly. I settled on a system where each line item is treated as its own form; each form is submitted by the one button and includes the common journal information (ie date, journal number) that the user has only needed to add in once.
-Because I wanted to limit all access to only signed in users this presented another challenge that I could persist the logged in user's and session information to be able to create and retrieve the right data. This information needed to be passed through each React component so that all had access to it and it required me to restructure my component layout.
+
+Because I wanted to limit all access to only signed in users this presented another challenge that I could persist the logged in user, and session, information to be able to create and retrieve the right data. This information needed to be passed through each React component so that all had access to it, and it required me to restructure my component layout.
 
 # :white_check_mark: Future features
 - more reports!!
