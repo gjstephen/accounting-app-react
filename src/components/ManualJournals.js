@@ -139,6 +139,8 @@ function ManualJournals({ loggedInUser }) {
           <section className='table-rows center'>
             {row}
             {row}
+            {row}
+            {row}
           </section>
 
           <div className='new-line-btn'>
